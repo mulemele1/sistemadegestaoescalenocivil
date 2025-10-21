@@ -9,7 +9,7 @@ use App\Models\Dispensa;
 use App\Models\Distribuicao;
 use App\Models\Fonte;
 use App\Models\Participante;
-use App\Models\Projecto;
+use App\Models\Projectoo;
 use App\Models\Proposta;
 use App\Models\Recepcao;
 use App\Models\Requisicao;
@@ -24,6 +24,7 @@ class DashboardController extends Controller
     {
         $this->middleware('auth');
     }
+    
     public function recuperar(Request $request)
     {
         $fontes = Fonte::all();
@@ -32,30 +33,50 @@ class DashboardController extends Controller
         $desembolsos = Desembolso::all();
         $dispensas = Dispensa::all();
         $propostas = Proposta::all();
-        $projectos = Projecto::all();
+        
+        // CORREÇÃO: Mudar $projectos para $projectoos
+        $projectoos = Projectoo::with(['categoria', 'localizacao'])->paginate(10);
+        
         $participantes = Participante::all();
         $administracaos = Administracao::all();
         $distribuicaos = Distribuicao::all();
         $gestaos = Gestao::all();
         $desembolsodafs = Desembolsodaf::all();
 
-        $data = date_create(date('d-m-Y'));$dados = array();
+        $data = date_create(date('d-m-Y'));
+        $dados = array();
         $year = $request->ano ?? $data->format('Y');
-        foreach ($projectos as $key => $project) {
+        
+        // CORREÇÃO: Usar $projectoos em vez de $projectos
+        foreach ($projectoos as $key => $project) {
             $tEntradas = DB::table('desembolsos')->where('projecto_id', $project->id)->whereYear('created_at', '=', $year)->sum('valor');
             $tSaidas = DB::table('dispensas')->where('projecto_id', $project->id)->whereYear('created_at', '=', $year)->sum('valor');
             $tSaidas2 = DB::table('dispensas')->where('projecto_id', $project->id)->whereYear('created_at', '=', $year)->sum('valor_variavel');
             $saldo = $tEntradas - $tSaidas - $tSaidas2;
             $dados [] = [$project->acronimo, $saldo, $tSaidas, $tEntradas];
         }
+        
         $Soma = DB::select('SELECT fontes.name, projectos.acronimo, SUM(valor) AS total
         FROM desembolsos
         INNER JOIN fontes ON desembolsos.administracao_id = fontes.id
         INNER JOIN projectos ON desembolsos.projecto_id = projectos.id
         where YEAR(desembolsos.created_at) = '.$year.'
         group by fontes.name, projectos.acronimo');
+        
         $finSoma = collect($Soma);
-        return view('home', compact('participantes','fontes', 'projectos', 'finSoma', 'dados', 'distribuicaos', 'desembolsos', 'dispensas','gestaos'));
+        
+        // CORREÇÃO: Passar $projectoos em vez de $projectos
+        return view('home', compact(
+            'participantes', 
+            'fontes', 
+            'projectoos',  // Mudado de projectos para projectoos
+            'finSoma', 
+            'dados', 
+            'distribuicaos', 
+            'desembolsos', 
+            'dispensas',
+            'gestaos'
+        ));
     }
 
     public function typeHome(Request $request)
@@ -66,15 +87,20 @@ class DashboardController extends Controller
         $desembolsos = Desembolso::all();
         $dispensas = Dispensa::all();
         $propostas = Proposta::all();
-        $projectos = Projecto::all();
+        
+        // CORREÇÃO: Mudar $projectoos para $projectos (consistência)
+        $projectos = Projectoo::all();
+        
         $participantes = Participante::all();
         $administracaos = Administracao::all();
         $distribuicaos = Distribuicao::all();
         $gestaos = Gestao::all();
         $desembolsodafs = Desembolsodaf::all();
 
-        $data = date_create(date('d-m-Y'));$dados = array();
+        $data = date_create(date('d-m-Y'));
+        $dados = array();
         $year = $request->ano ?? $data->format('Y');
+        
         foreach ($projectos as $key => $project) {
             $tEntradas = DB::table('desembolsos')->where('projecto_id', $project->id)->whereYear('created_at', '=', $year)->sum('valor');
             $tSaidas = DB::table('dispensas')->where('projecto_id', $project->id)->whereYear('created_at', '=', $year)->sum('valor');
@@ -82,13 +108,27 @@ class DashboardController extends Controller
             $saldo = $tEntradas - $tSaidas - $tSaidas2;
             $dados [] = [$project->acronimo, $saldo, $tSaidas, $tEntradas];
         }
+        
         $Soma = DB::select('SELECT fontes.name, projectos.acronimo, SUM(valor) AS total
         FROM desembolsos
         INNER JOIN fontes ON desembolsos.administracao_id = fontes.id
         INNER JOIN projectos ON desembolsos.projecto_id = projectos.id
         where YEAR(desembolsos.created_at) = '.$year.'
         group by fontes.name, projectos.acronimo');
+        
         $finSoma = collect($Soma);
-        return view('type-home', compact('participantes','fontes', 'projectos', 'finSoma', 'dados', 'distribuicaos', 'desembolsos', 'dispensas','gestaos'));
+        
+        // CORREÇÃO: Passar $projectos (consistente com o loop acima)
+        return view('type-home', compact(
+            'participantes',
+            'fontes', 
+            'projectos',  // Mantido como projectos para consistência
+            'finSoma', 
+            'dados', 
+            'distribuicaos', 
+            'desembolsos', 
+            'dispensas',
+            'gestaos'
+        ));
     }
 }

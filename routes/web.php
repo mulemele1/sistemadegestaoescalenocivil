@@ -58,6 +58,8 @@ Route::get('/projectoos/create', [ProjectooController::class, 'create'])->name('
 Route::post('/projectoos', [ProjectooController::class, 'store'])->name('projectoos.store');
 Route::get('/projectoos/{id}', [ProjectooController::class, 'show'])->name('projectoos.show');
 
+Route::get('/projectoos/export/csv', [ProjectooController::class, 'exportCSV'])->name('projectoos.export.csv');
+
 // Rotas de debug para projectoos
 Route::get('/debug/projectoos', [ProjectooController::class, 'debugData'])->name('projectoos.debug');
 Route::get('/test/storage', [ProjectooController::class, 'testStorage'])->name('storage.test');

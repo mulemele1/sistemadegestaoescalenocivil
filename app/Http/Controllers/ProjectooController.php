@@ -7,19 +7,41 @@ use App\Models\Projectoo;
 use App\Models\Fonte;
 use App\Models\Gestao;
 use App\Models\Gerencia;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectooController extends Controller
 {
     public function list(Request $request) {
-        $projectoos = Projectoo::with(['categoria', 'localizacao', 'ano'])
+        $query = Projectoo::with(['categoria', 'localizacao', 'ano'])
             ->when($request->search, function($query, $search) {
-                return $query->where('nome', 'LIKE', "%{$search}%");
+                // Pesquisa em múltiplos campos
+                return $query->where(function($q) use ($search) {
+                    $q->where('nome', 'LIKE', "%{$search}%")
+                      ->orWhere('tipografia', 'LIKE', "%{$search}%")
+                      ->orWhere('estado', 'LIKE', "%{$search}%")
+                      ->orWhereHas('categoria', function($q) use ($search) {
+                          $q->where('name', 'LIKE', "%{$search}%");
+                      })
+                      ->orWhereHas('localizacao', function($q) use ($search) {
+                          $q->where('name', 'LIKE', "%{$search}%");
+                      });
+                });
             })
-            ->get();
+            ->when($request->estado, function($query, $estado) {
+                return $query->where('estado', $estado);
+            })
+            ->when($request->categoria, function($query, $categoria) {
+                return $query->where('categoria_id', $categoria);
+            });
 
-        return view('projectoos.list', compact('projectoos'));
+        // Paginação simples
+        $projectoos = $query->paginate(10);
+
+        $categorias = Gestao::all();
+
+        return view('projectoos.list', compact('projectoos', 'categorias'));
     }
 
     public function show($id) {
@@ -33,35 +55,6 @@ class ProjectooController extends Controller
         $gestaos = Gestao::all(['id', 'name']);
         $gerencias = Gerencia::all(['id', 'name']);
         return view('projectoos.create', compact('fontes', 'gestaos', 'gerencias'));
-    }
-
-    // ✅ MÉTODO testStorage CORRIGIDO
-    public function testStorage() {
-        try {
-            $testPath = 'projectos/imagens/test_' . time() . '.txt';
-            $result = Storage::disk('public')->put($testPath, 'Teste de storage funcionando!');
-            
-            $exists = Storage::disk('public')->exists($testPath);
-            $url = Storage::url($testPath);
-            $fullPath = storage_path('app/public/' . $testPath);
-            $publicPath = public_path('storage/' . $testPath);
-            
-            return response()->json([
-                'success' => true,
-                'write_result' => $result,
-                'exists' => $exists,
-                'url' => $url,
-                'full_path' => $fullPath,
-                'public_path' => $publicPath,
-                'message' => 'Teste de storage realizado com sucesso!'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'error' => $e->getMessage(),
-                'message' => 'Erro no teste de storage'
-            ], 500);
-        }
     }
 
     // ✅ MÉTODO debugData CORRIGIDO
@@ -102,100 +95,56 @@ class ProjectooController extends Controller
         }
     }
 
-
-    // No ProjectooController, adicione este método:
-public function checkImages($id = null)
-{
-    if ($id) {
-        // Verificar imagem específica
-        $projecto = Projectoo::find($id);
-        if (!$projecto) {
-            return response()->json(['error' => 'Projeto não encontrado'], 404);
-        }
-        
-        $imagensInfo = [];
-        foreach ($projecto->imagens as $index => $imagem) {
-            $caminhoCompleto = public_path('storage/' . $imagem);
-            $imagensInfo[] = [
-                'caminho_bd' => $imagem,
-                'caminho_completo' => $caminhoCompleto,
-                'existe' => file_exists($caminhoCompleto),
-                'url' => asset('storage/' . $imagem)
-            ];
-        }
-        
-        return response()->json([
-            'projecto_id' => $projecto->id,
-            'projecto_nome' => $projecto->nome,
-            'imagens' => $imagensInfo
-        ]);
-    }
-    
-    // Verificar todas as imagens
-    $projectos = Projectoo::all();
-    $resultado = [];
-    
-    foreach ($projectos as $projecto) {
-        $imagensInfo = [];
-        foreach ($projecto->imagens as $imagem) {
-            $caminhoCompleto = public_path('storage/' . $imagem);
-            $imagensInfo[] = [
-                'caminho' => $imagem,
-                'existe' => file_exists($caminhoCompleto)
-            ];
-        }
-        
-        $resultado[] = [
-            'id' => $projecto->id,
-            'nome' => $projecto->nome,
-            'imagens' => $imagensInfo
-        ];
-    }
-    
-    return response()->json($resultado);
-}
-
-
-
-// No ProjectooController, adicione este método:
-public function diagnostic()
-{
-    $projectos = Projectoo::all();
-    $diagnostico = [];
-    
-    foreach ($projectos as $projecto) {
-        $info = [
-            'id' => $projecto->id,
-            'nome' => $projecto->nome,
-            'imagens_raw' => $projecto->getRawOriginal('imagens'),
-            'imagens_processed' => $projecto->imagens,
-            'storage_path' => storage_path('app/public'),
-            'public_path' => public_path('storage'),
-        ];
-        
-        // Verificar cada imagem
-        $imagensInfo = [];
-        foreach ($projecto->imagens as $index => $imagem) {
-            $storagePath = storage_path('app/public/' . $imagem);
-            $publicPath = public_path('storage/' . $imagem);
+    public function checkImages($id = null)
+    {
+        if ($id) {
+            // Verificar imagem específica
+            $projecto = Projectoo::find($id);
+            if (!$projecto) {
+                return response()->json(['error' => 'Projeto não encontrado'], 404);
+            }
             
-            $imagensInfo[] = [
-                'imagem' => $imagem,
-                'storage_exists' => file_exists($storagePath),
-                'public_exists' => file_exists($publicPath),
-                'storage_path' => $storagePath,
-                'public_path' => $publicPath,
-                'url' => asset('storage/' . $imagem),
+            $imagensInfo = [];
+            foreach ($projecto->imagens as $index => $imagem) {
+                $caminhoCompleto = public_path('storage/' . $imagem);
+                $imagensInfo[] = [
+                    'caminho_bd' => $imagem,
+                    'caminho_completo' => $caminhoCompleto,
+                    'existe' => file_exists($caminhoCompleto),
+                    'url' => asset('storage/' . $imagem)
+                ];
+            }
+            
+            return response()->json([
+                'projecto_id' => $projecto->id,
+                'projecto_nome' => $projecto->nome,
+                'imagens' => $imagensInfo
+            ]);
+        }
+        
+        // Verificar todas as imagens
+        $projectos = Projectoo::all();
+        $resultado = [];
+        
+        foreach ($projectos as $projecto) {
+            $imagensInfo = [];
+            foreach ($projecto->imagens as $imagem) {
+                $caminhoCompleto = public_path('storage/' . $imagem);
+                $imagensInfo[] = [
+                    'caminho' => $imagem,
+                    'existe' => file_exists($caminhoCompleto)
+                ];
+            }
+            
+            $resultado[] = [
+                'id' => $projecto->id,
+                'nome' => $projecto->nome,
+                'imagens' => $imagensInfo
             ];
         }
         
-        $info['imagens_detalhes'] = $imagensInfo;
-        $diagnostico[] = $info;
+        return response()->json($resultado);
     }
-    
-    return response()->json($diagnostico);
-}
-
 
     public function store(StoreUpdateProjectooRequest $request) {
         try {
@@ -277,5 +226,47 @@ public function diagnostic()
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao eliminar projeto: ' . $e->getMessage());
         }
+    }
+
+    // Método para exportação CSV
+    public function exportCSV()
+    {
+        $projectoos = Projectoo::with(['categoria', 'localizacao'])->get();
+        
+        $fileName = 'projectos_' . date('Y-m-d') . '.csv';
+        
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+        ];
+
+        $callback = function() use ($projectoos) {
+            $file = fopen('php://output', 'w');
+            
+            // Cabeçalho
+            fputcsv($file, [
+                'ID', 'Nome', 'Tipografia', 'Categoria', 'Localização', 
+                'Estado', 'Cor', 'Total de Imagens', 'Data de Criação'
+            ], ';');
+            
+            // Dados
+            foreach ($projectoos as $projecto) {
+                fputcsv($file, [
+                    $projecto->id,
+                    $projecto->nome,
+                    $projecto->tipografia ?? 'N/A',
+                    $projecto->categoria->name ?? 'N/A',
+                    $projecto->localizacao->name ?? 'N/A',
+                    $projecto->estado,
+                    $projecto->cor ?? 'N/A',
+                    count($projecto->imagens ?? []),
+                    $projecto->created_at->format('d/m/Y H:i')
+                ], ';');
+            }
+            
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }
