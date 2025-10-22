@@ -45,10 +45,37 @@ class ProjectooController extends Controller
     }
 
     public function show($id) {
-        if (!$projectoo = Projectoo::find($id))
-            return redirect()->route('projectoos.list');
-        return view('projectoos.show', compact('projectoo'));
+    if (!$projectoo = Projectoo::with(['categoria', 'localizacao'])->find($id))
+        return redirect()->route('projectoos.list')->with('error', 'Projeto não encontrado.');
+    
+    return view('projectoos.show', compact('projectoo'));
+}
+
+
+public function showuser($id)
+{
+    if (!$projectoo = Projectoo::with(['categoria', 'localizacao'])->find($id)) {
+        return redirect()->route('home')->with('error', 'Projeto não encontrado.');
     }
+    
+    return view('projectoos.showuser', compact('projectoo'));
+}
+
+public function sobre()
+{
+    return view('projectoos.sobre');
+}
+
+public function contacto()
+{
+    return view('projectoos.contacto');
+}
+
+public function verprojectos()
+{
+    $projectoos = Projectoo::with(['categoria', 'localizacao'])->paginate(9);
+    return view('projectoos.verprojectos', compact('projectoos'));
+}
 
     public function create() {
         $fontes = Fonte::all(['id', 'name']);

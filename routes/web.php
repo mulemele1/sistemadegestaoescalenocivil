@@ -59,6 +59,10 @@ Route::post('/projectoos', [ProjectooController::class, 'store'])->name('project
 Route::get('/projectoos/{id}', [ProjectooController::class, 'show'])->name('projectoos.show');
 
 Route::get('/projectoos/export/csv', [ProjectooController::class, 'exportCSV'])->name('projectoos.export.csv');
+// OU se preferir usar o controller existente:
+Route::get('/sobre', [ProjectooController::class, 'sobre'])->name('sobre');
+Route::get('/contacto', [ProjectooController::class, 'contacto'])->name('contacto');
+Route::get('/verprojectos', [ProjectooController::class, 'verprojectos'])->name('verprojectos');
 
 // Rotas de debug para projectoos
 Route::get('/debug/projectoos', [ProjectooController::class, 'debugData'])->name('projectoos.debug');
@@ -197,7 +201,11 @@ Route::get('/check-images/{id}', [ProjectooController::class, 'checkImages']);
 
 Route::get('/diagnostic', [ProjectooController::class, 'diagnostic']);
 
-
+// Para usuários não administrativos
+Route::get('/projectoos/user/{id}', [ProjectooController::class, 'showuser'])
+    ->name('projectoos.showuser')
+    ->middleware('auth');
+    
 Route::get('/', function () {
     return view('auth/login');
 });

@@ -69,6 +69,12 @@
         height: 200px;
         object-fit: cover;
         border-bottom: 3px solid #f8f9fa;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    
+    .project-image:hover {
+        transform: scale(1.05);
     }
     
     .project-info {
@@ -94,65 +100,19 @@
     .no-image {
         width: 100%;
         height: 200px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
         font-size: 1rem;
-    }
-    
-    .navbar-custom {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 15px 0;
-        margin-bottom: 0;
-        width: 100%;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-    }
-    
-    .nav-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
-    
-    .nav-logo {
-        color: white;
-        font-size: 1.8rem;
-        font-weight: bold;
-        text-decoration: none;
-    }
-    
-    .nav-links {
-        display: flex;
-        gap: 30px;
-    }
-    
-    .nav-link {
-        color: white;
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.3s ease;
-        padding: 8px 16px;
-        border-radius: 5px;
-    }
-    
-    .nav-link:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: #f8f9fa;
+        cursor: pointer;
     }
     
     .welcome-section {
         text-align: center;
         padding: 60px 20px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
         margin: 0;
         width: 100%;
         color: white;
@@ -193,13 +153,13 @@
         border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         text-align: center;
-        border-left: 4px solid #667eea;
+        border-left: 4px solid #2c3e50;
     }
 
     .stat-number {
         font-size: 2rem;
         font-weight: bold;
-        color: #667eea;
+        color: #2c3e50;
         margin-bottom: 10px;
     }
 
@@ -216,6 +176,30 @@
         font-weight: 600;
     }
 
+    /* Botão de ação */
+    .view-details-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        text-decoration: none;
+        margin-top: 10px;
+    }
+
+    .view-details-btn:hover {
+        transform: translateY(-2px);
+        color: white;
+        text-decoration: none;
+    }
+
     @media (max-width: 768px) {
         .project-grid {
             grid-template-columns: 1fr;
@@ -223,23 +207,8 @@
             padding: 15px;
         }
         
-        .nav-links {
-            gap: 15px;
-        }
-        
-        .nav-link {
-            font-size: 0.9rem;
-            padding: 6px 12px;
-        }
-        
         .welcome-section {
             padding: 40px 15px;
-        }
-        
-        .nav-container {
-            padding: 0 15px;
-            flex-direction: column;
-            gap: 15px;
         }
         
         .welcome-section h2 {
@@ -258,27 +227,13 @@
     }
 </style>
 
-<!-- Barra de Navegação Superior -->
-<nav class="navbar-custom">
-    <div class="nav-container">
-        <a href="#" class="nav-logo">SysEscaleno</a>
-        <div class="nav-links">
-            <a href="{{ url('/home') }}" class="nav-link">🏠 Home</a>
-            @if(Route::has('projectoos.list'))
-                <a href="{{ route('projectoos.list') }}" class="nav-link">📋 Projectos</a>
-            @else
-                <a href="{{ url('/projectoos') }}" class="nav-link">📋 Projectos</a>
-            @endif
-            <a href="#" class="nav-link">ℹ️ Sobre</a>
-            <a href="#" class="nav-link">📞 Contacto</a>
-        </div>
-    </div>
-</nav>
+<!-- INCLUIR HEADER COMPARTILHADO -->
+@include('layouts.header')
 
 <div class="full-screen-container">
+
     <!-- Estatísticas Rápidas -->
     <div class="stats-grid">
-        
         <div class="stat-card">
             @php
                 $concluidos = App\Models\Projectoo::where('estado', 'CONCLUIDO')->count();
@@ -288,7 +243,6 @@
         </div>
         <div class="stat-card">
             @php
-                // CONTAGEM CORRIGIDA: Projectos em curso inclui EM_ANDAMENTO e ACTIVO
                 $emCurso = App\Models\Projectoo::whereIn('estado', ['EM_CURSO', 'ACTIVO'])->count();
             @endphp
             <div class="stat-number">{{ $emCurso }}</div>
@@ -314,10 +268,12 @@
                 @if(isset($projectoo->imagens) && count($projectoo->imagens) > 0)
                     <img src="{{ asset('storage/' . $projectoo->imagens[0]) }}" 
                          alt="{{ $projectoo->nome }}" 
-                         class="project-image">
+                         class="project-image"
+                         onclick="window.location.href='{{ route('projectoos.showuser', $projectoo->id) }}'">
                 @else
-                    <div class="no-image">
-                        📷 Sem imagem
+                    <div class="no-image" onclick="window.location.href='{{ route('projectoos.showuser', $projectoo->id) }}'">
+                        <i class="fas fa-image fa-2x mb-2"></i><br>
+                        Sem imagem
                     </div>
                 @endif
                 
@@ -341,13 +297,19 @@
                         <i class="fas fa-calendar"></i> 
                         {{ $projectoo->created_at->format('d/m/Y') }}
                     </div>
+                    <div style="margin-top: 15px; text-align: center;">
+                        <a href="{{ route('projectoos.showuser', $projectoo->id) }}" class="view-details-btn">
+                            <i class="fas fa-eye"></i> Ver Detalhes Completos
+                        </a>
+                    </div>
                 </div>
             </div>
             @endforeach
         @else
         <div class="empty-fullscreen" style="grid-column: 1 / -1;">
             <div class="alert alert-info text-center" style="width: 100%; max-width: 500px;">
-                <h4>📭 Nenhum projecto encontrado</h4>
+                <h4><i class="fas fa-folder-open fa-2x mb-3"></i></h4>
+                <h5>Nenhum projecto encontrado</h5>
                 <p>Não existem projectos para mostrar no momento.</p>
             </div>
         </div>
@@ -371,10 +333,32 @@
                 card.style.transform = 'translateY(0)';
             }, index * 100);
         });
+
+        // Adicionar evento de clique em todo o card (opcional)
+        cards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Evita que clique nos botões dentro do card redirecione
+                if (!e.target.classList.contains('view-details-btn') && 
+                    !e.target.closest('.view-details-btn')) {
+                    const link = this.querySelector('.view-details-btn');
+                    if (link) {
+                        window.location.href = link.href;
+                    }
+                }
+            });
+        });
     });
 </script>
 
+<!-- INCLUIR FOOTER COMPARTILHADO -->
+@include('layouts.footer')
+
 @endcannot
+
+
+
+
+
 
 @can('is_admin')
 <!-- PAINEL PARA ADMINISTRADORES COM BARRA LATERAL -->
@@ -480,7 +464,39 @@
         </div>
     </div>
 
-    <!-- Tabela de Últimos Projectos (APENAS 3 REGISTROS) -->
+    
+
+    <!-- Gráficos e Estatísticas Adicionais -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-chart-pie mr-2"></i>
+                        Distribuição por Estado
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <canvas id="projectStatusChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-chart-bar mr-2"></i>
+                        Projectos por Categoria
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <canvas id="projectCategoryChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela de Últimos 3 Projectos Adicionados -->
     <div class="row">
         <div class="col-12">
             <div class="card card-lightblue card-outline">
@@ -571,35 +587,6 @@
         </div>
     </div>
 
-    <!-- Gráficos e Estatísticas Adicionais -->
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="fas fa-chart-pie mr-2"></i>
-                        Distribuição por Estado
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <canvas id="projectStatusChart" height="200"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="fas fa-chart-bar mr-2"></i>
-                        Projectos por Categoria
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <canvas id="projectCategoryChart" height="200"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Ações Rápidas -->
     <div class="row">
