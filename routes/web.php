@@ -21,7 +21,7 @@ use App\Http\Controllers\{
     GestaoController,
     GerenciaController,
     RequisicaocispoController,
-    DashboarduserController,
+    DashboarduserController
 };
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,179 +37,216 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Gráficos
-Route::get('/relatorios/projecto/anos', [GraficoController::class, 'projectoAnos'])->name('relatorios.projecto.anos');
-Route::get('/relatorios/projecto/ano', [GraficoController::class, 'projectoAno'])->name('relatorios.projecto.ano');
-Route::get('/relatorios/administracao/anos', [GraficoController::class, 'administracaoAnos'])->name('relatorios.administracao.anos');
-Route::get('/relatorios/administracao/ano', [GraficoController::class, 'administracaoAno'])->name('relatorios.administracao.ano');
-Route::get('/relatorios/recepcao/anos', [GraficoController::class, 'recepcaoAnos'])->name('relatorios.recepcao.anos');
-Route::get('/relatorios/recepcao/ano', [GraficoController::class, 'recepcaoAno'])->name('relatorios.recepcao.ano');
-Route::get('/relatorios/participanteDN/anoN', [GraficoController::class, 'participanteAnoDN'])->name('relatorios.participanteDN.anoN');
-Route::get('/relatorios/participanteDV/anoV', [GraficoController::class, 'participanteAnoDV'])->name('relatorios.participanteDV.anoV');
-Route::get('/relatorios/fontedaf/ano', [GraficoController::class, 'fontedafAno'])->name('relatorios.fontedaf.ano');
-Route::get('/relatorios/fontedaf/anos', [GraficoController::class, 'fontedafAnos'])->name('relatorios.fontedaf.anos');
-
-//Cadastros
-Route::delete('/projectoos/{id}', [ProjectooController::class, 'delete'])->name('projectoos.delete');
-Route::put('/projectoos/{id}', [ProjectooController::class, 'update'])->name('projectoos.update');
-Route::get('/projectoos/{id}/edit', [ProjectooController::class, 'edit'])->name('projectoos.edit');
-Route::get('/projectoos/list', [ProjectooController::class, 'list'])->name('projectoos.list');
-Route::get('/projectoos/create', [ProjectooController::class, 'create'])->name('projectoos.create');
-Route::post('/projectoos', [ProjectooController::class, 'store'])->name('projectoos.store');
-Route::get('/projectoos/{id}', [ProjectooController::class, 'show'])->name('projectoos.show');
-
-Route::get('/projectoos/export/csv', [ProjectooController::class, 'exportCSV'])->name('projectoos.export.csv');
-// OU se preferir usar o controller existente:
-Route::get('/sobre', [ProjectooController::class, 'sobre'])->name('sobre');
-Route::get('/contacto', [ProjectooController::class, 'contacto'])->name('contacto');
-Route::get('/verprojectos', [ProjectooController::class, 'verprojectos'])->name('verprojectos');
-
-// Rotas de debug para projectoos
-Route::get('/debug/projectoos', [ProjectooController::class, 'debugData'])->name('projectoos.debug');
-Route::get('/test/storage', [ProjectooController::class, 'testStorage'])->name('storage.test');
-
-Route::delete('/fontes/{id}', [FonteController::class, 'delete'])->name('fontes.delete');
-Route::put('/fontes/{id}', [FonteController::class, 'update'])->name('fontes.update');
-Route::get('/fontes/{id}/edit', [FonteController::class, 'edit'])->name('fontes.edit');
-Route::get('/fontes/list', [FonteController::class, 'list'])->name('fontes.list');
-Route::get('/fontes/create', [FonteController::class, 'create'])->name('fontes.create');
-Route::post('/fontes', [FonteController::class, 'store'])->name('fontes.store');
-Route::get('/fontes/{id}', [FonteController::class, 'show'])->name('fontes.show');
-
-Route::delete('/gestaos/{id}', [GestaoController::class, 'delete'])->name('gestaos.delete');
-Route::put('/gestaos/{id}', [GestaoController::class, 'update'])->name('gestaos.update');
-Route::get('/gestaos/{id}/edit', [GestaoController::class, 'edit'])->name('gestaos.edit');
-Route::get('/gestaos/list', [GestaoController::class, 'list'])->name('gestaos.list');
-Route::get('/gestaos/create', [GestaoController::class, 'create'])->name('gestaos.create');
-Route::post('/gestaos', [GestaoController::class, 'store'])->name('gestaos.store');
-Route::get('/gestaos/{id}', [GestaoController::class, 'show'])->name('gestaos.show');
-
-Route::delete('/gerencias/{id}', [GerenciaController::class, 'delete'])->name('gerencias.delete');
-Route::put('/gerencias/{id}', [GerenciaController::class, 'update'])->name('gerencias.update');
-Route::get('/gerencias/{id}/edit', [GerenciaController::class, 'edit'])->name('gerencias.edit');
-Route::get('/gerencias/list', [GerenciaController::class, 'list'])->name('gerencias.list');
-Route::get('/gerencias/create', [GerenciaController::class, 'create'])->name('gerencias.create');
-Route::post('/gerencias', [GerenciaController::class, 'store'])->name('gerencias.store');
-Route::get('/gerencias/{id}', [GerenciaController::class, 'show'])->name('gerencias.show');
-
-Route::delete('/administracaos/{id}', [AdministracaoController::class, 'delete'])->name('administracaos.delete');
-Route::put('/administracaos/{id}', [AdministracaoController::class, 'update'])->name('administracaos.update');
-Route::get('/administracaos/{id}/edit', [AdministracaoController::class, 'edit'])->name('administracaos.edit');
-Route::get('/administracaos/list', [AdministracaoController::class, 'list'])->name('administracaos.list');
-Route::get('/administracaos/create', [AdministracaoController::class, 'create'])->name('administracaos.create');
-Route::post('/administracaos', [AdministracaoController::class, 'store'])->name('administracaos.store');
-Route::get('/administracaos/{id}', [AdministracaoController::class, 'show'])->name('administracaos.show');
-
-Route::delete('/participantes/{id}', [ParticipanteController::class, 'delete'])->name('participantes.delete');
-Route::put('/participantes/{id}', [ParticipanteController::class, 'update'])->name('participantes.update');
-Route::get('/participantes/{id}/edit', [ParticipanteController::class, 'edit'])->name('participantes.edit');
-Route::get('/participantes/list', [ParticipanteController::class, 'list'])->name('participantes.list');
-Route::get('/participantes/create', [ParticipanteController::class, 'create'])->name('participantes.create');
-Route::post('/participantes', [ParticipanteController::class, 'store'])->name('participantes.store');
-Route::get('/participantes/{id}', [ParticipanteController::class, 'show'])->name('participantes.show');
-
-Route::post('/participantes/carregar', [ParticipanteController::class, 'carregar']);
-Route::post('/participantes/guardar', [ParticipanteController::class, 'guardar']);
-Route::post('/import', [ParticipanteController::class,"import"]);
-Route::post('/participantes/import', [ParticipanteController::class, 'import'])->name('participantes.import');
-
-Route::delete('/recepcaos/{id}', [RecepcaoController::class, 'delete'])->name('recepcaos.delete');
-Route::put('/recepcaos/{id}', [RecepcaoController::class, 'update'])->name('recepcaos.update');
-Route::get('/recepcaos/{id}/edit', [RecepcaoController::class, 'edit'])->name('recepcaos.edit');
-Route::get('/recepcaos/list', [RecepcaoController::class, 'list'])->name('recepcaos.list');
-Route::get('/recepcaos/create', [RecepcaoController::class, 'create'])->name('recepcaos.create');
-Route::post('/recepcaos', [RecepcaoController::class, 'store'])->name('recepcaos.store');
-Route::get('/recepcaos/{id}', [RecepcaoController::class, 'show'])->name('recepcaos.show');
-
-Route::delete('/users/{id}', [UserController::class, 'delete'])->name('users.delete');
-Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
-Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-Route::get('/users/list', [UserController::class, 'list'])->name('users.list');
-Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-Route::post('/users', [UserController::class, 'store'])->name('users.store');
-Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
-
-//Operações
-Route::delete('/propostas/{id}', [PropostaController::class, 'delete'])->name('propostas.delete');
-Route::put('/propostas/{id}', [PropostaController::class, 'update'])->name('propostas.update');
-Route::get('/propostas/{id}/edit', [PropostaController::class, 'edit'])->name('propostas.edit');
-Route::get('/propostas/list', [PropostaController::class, 'list'])->name('propostas.list');
-Route::get('/propostas/create', [PropostaController::class, 'create'])->name('propostas.create');
-Route::post('/propostas', [PropostaController::class, 'store'])->name('propostas.store');
-Route::get('/propostas/{id}', [PropostaController::class, 'show'])->name('propostas.show');
-
-Route::delete('/desembolsoinsfontes/{id}', [DesembolsoinsfonteController::class, 'delete'])->name('desembolsoinsfontes.delete');
-Route::put('/desembolsoinsfontes/{id}', [DesembolsoinsfonteController::class, 'update'])->name('desembolsoinsfontes.update');
-Route::get('/desembolsoinsfontes/{id}/edit', [DesembolsoinsfonteController::class, 'edit'])->name('desembolsoinsfontes.edit');
-Route::get('/desembolsoinsfontes/list', [DesembolsoinsfonteController::class, 'list'])->name('desembolsoinsfontes.list');
-Route::get('/desembolsoinsfontes/create', [DesembolsoinsfonteController::class, 'create'])->name('desembolsoinsfontes.create');
-Route::post('/desembolsoinsfontes', [DesembolsoinsfonteController::class, 'store'])->name('desembolsoinsfontes.store');
-Route::get('/desembolsoinsfontes/{id}', [DesembolsoinsfonteController::class, 'show'])->name('desembolsoinsfontes.show');
-
-Route::delete('/desembolsos/{id}', [DesembolsoController::class, 'delete'])->name('desembolsos.delete');
-Route::put('/desembolsos/{id}', [DesembolsoController::class, 'update'])->name('desembolsos.update');
-Route::get('/desembolsos/{id}/edit', [DesembolsoController::class, 'edit'])->name('desembolsos.edit');
-Route::get('/desembolsos/list', [DesembolsoController::class, 'list'])->name('desembolsos.list');
-Route::get('/desembolsos/create', [DesembolsoController::class, 'create'])->name('desembolsos.create');
-Route::post('/desembolsos', [DesembolsoController::class, 'store'])->name('desembolsos.store');
-Route::get('/desembolsos/{id}', [DesembolsoController::class, 'show'])->name('desembolsos.show');
-
-Route::delete('/desembolsodafs/{id}', [DesembolsodafController::class, 'delete'])->name('desembolsodafs.delete');
-Route::put('/desembolsodafs/{id}', [DesembolsodafController::class, 'update'])->name('desembolsodafs.update');
-Route::get('/desembolsodafs/{id}/edit', [DesembolsodafController::class, 'edit'])->name('desembolsodafs.edit');
-Route::get('/desembolsodafs/list', [DesembolsodafController::class, 'list'])->name('desembolsodafs.list');
-Route::get('/desembolsodafs/create', [DesembolsodafController::class, 'create'])->name('desembolsodafs.create');
-Route::post('/desembolsodafs', [DesembolsodafController::class, 'store'])->name('desembolsodafs.store');
-Route::get('/desembolsodafs/{id}', [DesembolsodafController::class, 'show'])->name('desembolsodafs.show');
-
-// Route::delete('/distribuicaos/{id}', [DistribuicaoController::class, 'delete'])->name('distribuicaos.delete');
-// Route::put('/distribuicaos/{id}', [DistribuicaoController::class, 'update'])->name('distribuicaos.update');
-// Route::get('/distribuicaos/{id}/edit', [DistribuicaoController::class, 'edit'])->name('distribuicaos.edit');
-// Route::get('/distribuicaos/list', [DistribuicaoController::class, 'list'])->name('distribuicaos.list');
-// Route::get('/distribuicaos/create', [DistribuicaoController::class, 'create'])->name('distribuicaos.create');
-// Route::post('/distribuicaos', [DistribuicaoController::class, 'store'])->name('distribuicaos.store');
-// Route::get('/distribuicaos/{id}', [DistribuicaoController::class, 'show'])->name('distribuicaos.show');
-
-Route::delete('/requisicaos/{id}', [RequisicaoController::class, 'delete'])->name('requisicaos.delete');
-Route::put('/requisicaos/{id}', [RequisicaoController::class, 'update'])->name('requisicaos.update');
-Route::get('/requisicaos/{id}/edit', [RequisicaoController::class, 'edit'])->name('requisicaos.edit');
-Route::get('/requisicaos/list', [RequisicaoController::class, 'list'])->name('requisicaos.list');
-Route::get('/requisicaos/create', [RequisicaoController::class, 'create'])->name('requisicaos.create');
-Route::post('/requisicaos', [RequisicaoController::class, 'store'])->name('requisicaos.store');
-Route::get('/requisicaos/{id}', [RequisicaoController::class, 'show'])->name('requisicaos.show');
-
-// Route::delete('/requisicaocispos/{id}', [RequisicaocispoController::class, 'delete'])->name('requisicaocispos.delete');
-// Route::put('/requisicaocispos/{id}', [RequisicaocispoController::class, 'update'])->name('requisicaocispos.update');
-// Route::get('/requisicaocispos/{id}/edit', [RequisicaocispoController::class, 'edit'])->name('requisicaocispos.edit');
-// Route::get('/requisicaocispos/list', [RequisicaocispoController::class, 'list'])->name('requisicaocispos.list');
-// Route::get('/requisicaocispos/create', [RequisicaocispoController::class, 'create'])->name('requisicaocispos.create');
-// Route::post('/requisicaocispos', [RequisicaocispoController::class, 'store'])->name('requisicaocispos.store');
-// Route::get('/requisicaocispos/{id}', [RequisicaocispoController::class, 'show'])->name('requisicaocispos.show');
-
-Route::delete('/dispensas/{id}', [DispensaController::class, 'delete'])->name('dispensas.delete');
-Route::put('/dispensas/{id}', [DispensaController::class, 'update'])->name('dispensas.update');
-Route::get('/dispensas/{id}/edit', [DispensaController::class, 'edit'])->name('dispensas.edit');
-Route::get('/dispensas/list', [DispensaController::class, 'list'])->name('dispensas.list');
-Route::get('/dispensas/create', [DispensaController::class, 'create'])->name('dispensas.create');
-Route::post('/dispensas', [DispensaController::class, 'store'])->name('dispensas.store');
-Route::get('/dispensas/{id}', [DispensaController::class, 'show'])->name('dispensas.show');
-
-
-// Rotas de debug para imagens
-Route::get('/check-images', [ProjectooController::class, 'checkImages']);
-Route::get('/check-images/{id}', [ProjectooController::class, 'checkImages']);
-
-Route::get('/diagnostic', [ProjectooController::class, 'diagnostic']);
-
-// Para usuários não administrativos
-Route::get('/projectoos/user/{id}', [ProjectooController::class, 'showuser'])
-    ->name('projectoos.showuser')
-    ->middleware('auth');
-    
+// Rotas Públicas
 Route::get('/', function () {
     return view('auth/login');
 });
 
-Auth::routes(); 
+// Autenticação
+Auth::routes();
 
-Route::get('/home', [DashboardController::class, 'recuperar'])->name('recuperar')->middleware('auth');
+// Rotas de Gráficos e Relatórios
+Route::prefix('relatorios')->group(function () {
+    Route::get('/projecto/anos', [GraficoController::class, 'projectoAnos'])->name('relatorios.projecto.anos');
+    Route::get('/projecto/ano', [GraficoController::class, 'projectoAno'])->name('relatorios.projecto.ano');
+    Route::get('/administracao/anos', [GraficoController::class, 'administracaoAnos'])->name('relatorios.administracao.anos');
+    Route::get('/administracao/ano', [GraficoController::class, 'administracaoAno'])->name('relatorios.administracao.ano');
+    Route::get('/recepcao/anos', [GraficoController::class, 'recepcaoAnos'])->name('relatorios.recepcao.anos');
+    Route::get('/recepcao/ano', [GraficoController::class, 'recepcaoAno'])->name('relatorios.recepcao.ano');
+    Route::get('/participanteDN/anoN', [GraficoController::class, 'participanteAnoDN'])->name('relatorios.participanteDN.anoN');
+    Route::get('/participanteDV/anoV', [GraficoController::class, 'participanteAnoDV'])->name('relatorios.participanteDV.anoV');
+    Route::get('/fontedaf/ano', [GraficoController::class, 'fontedafAno'])->name('relatorios.fontedaf.ano');
+    Route::get('/fontedaf/anos', [GraficoController::class, 'fontedafAnos'])->name('relatorios.fontedaf.anos');
+});
+
+// Rotas Públicas do SysEscaleno (acessíveis sem auth)
+Route::prefix('sysescaleno')->group(function () {
+    // Páginas públicas
+    Route::get('/sobre', [ProjectooController::class, 'sobre'])->name('sobre');
+    Route::get('/contacto', [ProjectooController::class, 'contacto'])->name('contacto');
+    Route::get('/verprojectos', [ProjectooController::class, 'verprojectos'])->name('verprojectos');
+    
+    // Visualização pública de projetos
+    Route::get('/projectos/{id}', [ProjectooController::class, 'showuser'])
+        ->name('projectoos.showuser');
+});
+
+// Rotas Protegidas (requerem autenticação)
+Route::middleware(['auth'])->group(function () {
+    
+    // Dashboard
+    Route::get('/home', [DashboardController::class, 'recuperar'])->name('recuperar');
+
+    // CRUD Routes - Projectoos
+    Route::prefix('projectoos')->group(function () {
+        Route::get('/list', [ProjectooController::class, 'list'])->name('projectoos.list');
+        Route::get('/create', [ProjectooController::class, 'create'])->name('projectoos.create');
+        Route::post('/', [ProjectooController::class, 'store'])->name('projectoos.store');
+        Route::get('/{id}', [ProjectooController::class, 'show'])->name('projectoos.show');
+        Route::get('/{id}/edit', [ProjectooController::class, 'edit'])->name('projectoos.edit');
+        Route::put('/{id}', [ProjectooController::class, 'update'])->name('projectoos.update');
+        Route::delete('/{id}', [ProjectooController::class, 'delete'])->name('projectoos.delete');
+        Route::get('/export/csv', [ProjectooController::class, 'exportCSV'])->name('projectoos.export.csv');
+    });
+
+    // CRUD Routes - Fontes
+    Route::prefix('fontes')->group(function () {
+        Route::get('/list', [FonteController::class, 'list'])->name('fontes.list');
+        Route::get('/create', [FonteController::class, 'create'])->name('fontes.create');
+        Route::post('/', [FonteController::class, 'store'])->name('fontes.store');
+        Route::get('/{id}', [FonteController::class, 'show'])->name('fontes.show');
+        Route::get('/{id}/edit', [FonteController::class, 'edit'])->name('fontes.edit');
+        Route::put('/{id}', [FonteController::class, 'update'])->name('fontes.update');
+        Route::delete('/{id}', [FonteController::class, 'delete'])->name('fontes.delete');
+    });
+
+    // CRUD Routes - Gestão
+    Route::prefix('gestaos')->group(function () {
+        Route::get('/list', [GestaoController::class, 'list'])->name('gestaos.list');
+        Route::get('/create', [GestaoController::class, 'create'])->name('gestaos.create');
+        Route::post('/', [GestaoController::class, 'store'])->name('gestaos.store');
+        Route::get('/{id}', [GestaoController::class, 'show'])->name('gestaos.show');
+        Route::get('/{id}/edit', [GestaoController::class, 'edit'])->name('gestaos.edit');
+        Route::put('/{id}', [GestaoController::class, 'update'])->name('gestaos.update');
+        Route::delete('/{id}', [GestaoController::class, 'delete'])->name('gestaos.delete');
+    });
+
+    // CRUD Routes - Gerência
+    Route::prefix('gerencias')->group(function () {
+        Route::get('/list', [GerenciaController::class, 'list'])->name('gerencias.list');
+        Route::get('/create', [GerenciaController::class, 'create'])->name('gerencias.create');
+        Route::post('/', [GerenciaController::class, 'store'])->name('gerencias.store');
+        Route::get('/{id}', [GerenciaController::class, 'show'])->name('gerencias.show');
+        Route::get('/{id}/edit', [GerenciaController::class, 'edit'])->name('gerencias.edit');
+        Route::put('/{id}', [GerenciaController::class, 'update'])->name('gerencias.update');
+        Route::delete('/{id}', [GerenciaController::class, 'delete'])->name('gerencias.delete');
+    });
+
+    // CRUD Routes - Administração
+    Route::prefix('administracaos')->group(function () {
+        Route::get('/list', [AdministracaoController::class, 'list'])->name('administracaos.list');
+        Route::get('/create', [AdministracaoController::class, 'create'])->name('administracaos.create');
+        Route::post('/', [AdministracaoController::class, 'store'])->name('administracaos.store');
+        Route::get('/{id}', [AdministracaoController::class, 'show'])->name('administracaos.show');
+        Route::get('/{id}/edit', [AdministracaoController::class, 'edit'])->name('administracaos.edit');
+        Route::put('/{id}', [AdministracaoController::class, 'update'])->name('administracaos.update');
+        Route::delete('/{id}', [AdministracaoController::class, 'delete'])->name('administracaos.delete');
+    });
+
+    // CRUD Routes - Participantes
+    Route::prefix('participantes')->group(function () {
+        Route::get('/list', [ParticipanteController::class, 'list'])->name('participantes.list');
+        Route::get('/create', [ParticipanteController::class, 'create'])->name('participantes.create');
+        Route::post('/', [ParticipanteController::class, 'store'])->name('participantes.store');
+        Route::get('/{id}', [ParticipanteController::class, 'show'])->name('participantes.show');
+        Route::get('/{id}/edit', [ParticipanteController::class, 'edit'])->name('participantes.edit');
+        Route::put('/{id}', [ParticipanteController::class, 'update'])->name('participantes.update');
+        Route::delete('/{id}', [ParticipanteController::class, 'delete'])->name('participantes.delete');
+        
+        // Importação de participantes
+        Route::post('/carregar', [ParticipanteController::class, 'carregar']);
+        Route::post('/guardar', [ParticipanteController::class, 'guardar']);
+        Route::post('/import', [ParticipanteController::class, 'import'])->name('participantes.import');
+    });
+
+    // CRUD Routes - Recepção
+    Route::prefix('recepcaos')->group(function () {
+        Route::get('/list', [RecepcaoController::class, 'list'])->name('recepcaos.list');
+        Route::get('/create', [RecepcaoController::class, 'create'])->name('recepcaos.create');
+        Route::post('/', [RecepcaoController::class, 'store'])->name('recepcaos.store');
+        Route::get('/{id}', [RecepcaoController::class, 'show'])->name('recepcaos.show');
+        Route::get('/{id}/edit', [RecepcaoController::class, 'edit'])->name('recepcaos.edit');
+        Route::put('/{id}', [RecepcaoController::class, 'update'])->name('recepcaos.update');
+        Route::delete('/{id}', [RecepcaoController::class, 'delete'])->name('recepcaos.delete');
+    });
+
+    // CRUD Routes - Users
+    Route::prefix('users')->group(function () {
+        Route::get('/list', [UserController::class, 'list'])->name('users.list');
+        Route::get('/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('/', [UserController::class, 'store'])->name('users.store');
+        Route::get('/{id}', [UserController::class, 'show'])->name('users.show');
+        Route::get('/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+        Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/{id}', [UserController::class, 'delete'])->name('users.delete');
+    });
+
+    // Operações - Propostas
+    Route::prefix('propostas')->group(function () {
+        Route::get('/list', [PropostaController::class, 'list'])->name('propostas.list');
+        Route::get('/create', [PropostaController::class, 'create'])->name('propostas.create');
+        Route::post('/', [PropostaController::class, 'store'])->name('propostas.store');
+        Route::get('/{id}', [PropostaController::class, 'show'])->name('propostas.show');
+        Route::get('/{id}/edit', [PropostaController::class, 'edit'])->name('propostas.edit');
+        Route::put('/{id}', [PropostaController::class, 'update'])->name('propostas.update');
+        Route::delete('/{id}', [PropostaController::class, 'delete'])->name('propostas.delete');
+    });
+
+    // Operações - Desembolso de Fontes
+    Route::prefix('desembolsoinsfontes')->group(function () {
+        Route::get('/list', [DesembolsoinsfonteController::class, 'list'])->name('desembolsoinsfontes.list');
+        Route::get('/create', [DesembolsoinsfonteController::class, 'create'])->name('desembolsoinsfontes.create');
+        Route::post('/', [DesembolsoinsfonteController::class, 'store'])->name('desembolsoinsfontes.store');
+        Route::get('/{id}', [DesembolsoinsfonteController::class, 'show'])->name('desembolsoinsfontes.show');
+        Route::get('/{id}/edit', [DesembolsoinsfonteController::class, 'edit'])->name('desembolsoinsfontes.edit');
+        Route::put('/{id}', [DesembolsoinsfonteController::class, 'update'])->name('desembolsoinsfontes.update');
+        Route::delete('/{id}', [DesembolsoinsfonteController::class, 'delete'])->name('desembolsoinsfontes.delete');
+    });
+
+    // Operações - Desembolsos
+    Route::prefix('desembolsos')->group(function () {
+        Route::get('/list', [DesembolsoController::class, 'list'])->name('desembolsos.list');
+        Route::get('/create', [DesembolsoController::class, 'create'])->name('desembolsos.create');
+        Route::post('/', [DesembolsoController::class, 'store'])->name('desembolsos.store');
+        Route::get('/{id}', [DesembolsoController::class, 'show'])->name('desembolsos.show');
+        Route::get('/{id}/edit', [DesembolsoController::class, 'edit'])->name('desembolsos.edit');
+        Route::put('/{id}', [DesembolsoController::class, 'update'])->name('desembolsos.update');
+        Route::delete('/{id}', [DesembolsoController::class, 'delete'])->name('desembolsos.delete');
+    });
+
+    // Operações - Desembolsos DAF
+    Route::prefix('desembolsodafs')->group(function () {
+        Route::get('/list', [DesembolsodafController::class, 'list'])->name('desembolsodafs.list');
+        Route::get('/create', [DesembolsodafController::class, 'create'])->name('desembolsodafs.create');
+        Route::post('/', [DesembolsodafController::class, 'store'])->name('desembolsodafs.store');
+        Route::get('/{id}', [DesembolsodafController::class, 'show'])->name('desembolsodafs.show');
+        Route::get('/{id}/edit', [DesembolsodafController::class, 'edit'])->name('desembolsodafs.edit');
+        Route::put('/{id}', [DesembolsodafController::class, 'update'])->name('desembolsodafs.update');
+        Route::delete('/{id}', [DesembolsodafController::class, 'delete'])->name('desembolsodafs.delete');
+    });
+
+    // Operações - Requisições
+    Route::prefix('requisicaos')->group(function () {
+        Route::get('/list', [RequisicaoController::class, 'list'])->name('requisicaos.list');
+        Route::get('/create', [RequisicaoController::class, 'create'])->name('requisicaos.create');
+        Route::post('/', [RequisicaoController::class, 'store'])->name('requisicaos.store');
+        Route::get('/{id}', [RequisicaoController::class, 'show'])->name('requisicaos.show');
+        Route::get('/{id}/edit', [RequisicaoController::class, 'edit'])->name('requisicaos.edit');
+        Route::put('/{id}', [RequisicaoController::class, 'update'])->name('requisicaos.update');
+        Route::delete('/{id}', [RequisicaoController::class, 'delete'])->name('requisicaos.delete');
+    });
+
+    // Operações - Dispensas
+    Route::prefix('dispensas')->group(function () {
+        Route::get('/list', [DispensaController::class, 'list'])->name('dispensas.list');
+        Route::get('/create', [DispensaController::class, 'create'])->name('dispensas.create');
+        Route::post('/', [DispensaController::class, 'store'])->name('dispensas.store');
+        Route::get('/{id}', [DispensaController::class, 'show'])->name('dispensas.show');
+        Route::get('/{id}/edit', [DispensaController::class, 'edit'])->name('dispensas.edit');
+        Route::put('/{id}', [DispensaController::class, 'update'])->name('dispensas.update');
+        Route::delete('/{id}', [DispensaController::class, 'delete'])->name('dispensas.delete');
+    });
+
+    // Rotas de Debug e Diagnóstico
+    Route::prefix('debug')->group(function () {
+        Route::get('/projectoos', [ProjectooController::class, 'debugData'])->name('projectoos.debug');
+        Route::get('/storage', [ProjectooController::class, 'testStorage'])->name('storage.test');
+        Route::get('/check-images', [ProjectooController::class, 'checkImages']);
+        Route::get('/check-images/{id}', [ProjectooController::class, 'checkImages']);
+        Route::get('/diagnostic', [ProjectooController::class, 'diagnostic']);
+    });
+
+});
+
+// Importação geral (mantida separada por compatibilidade)
+Route::post('/import', [ParticipanteController::class, "import"]);

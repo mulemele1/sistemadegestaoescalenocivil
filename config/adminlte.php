@@ -442,13 +442,13 @@ return [
         ],
         [
             'text' => 'SOBRE NÓS',
-            'url'  => 'users/list',
+            'url'  => 'projectoos/sobre',
             'icon' => 'fas fa-fw fa-user',
             'can'  => 'is_admin',
         ],
         [
             'text' => 'CONTACTOS',
-            'url'  => 'users/list',
+            'url'  => 'projectoos/contacto',
             'icon' => 'fas fa-fw fa-user',
             'can'  => 'is_admin',
         ],

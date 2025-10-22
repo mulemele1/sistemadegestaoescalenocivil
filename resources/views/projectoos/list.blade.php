@@ -8,16 +8,18 @@
     .card-custom {
         border: 1px solid #dee2e6;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
     }
     
     .table-custom thead th {
-        background-color: #343a40;
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
         color: white;
         text-align: center;
         border: none;
         padding: 12px 10px;
         font-weight: 600;
         font-size: 0.9rem;
+        border-bottom: 2px solid #dee2e6;
     }
     
     .table-custom tbody td {
@@ -31,6 +33,7 @@
     
     .table-custom tbody tr:hover {
         background-color: #f8f9fa;
+        transition: background-color 0.3s ease;
     }
     
     .btn-group { 
@@ -47,8 +50,8 @@
     }
     
     .status-badge {
-        padding: 4px 8px;
-        border-radius: 4px;
+        padding: 6px 12px;
+        border-radius: 20px;
         font-size: 0.75rem;
         font-weight: 600;
         text-transform: uppercase;
@@ -77,8 +80,13 @@
         height: 25px; 
         border-radius: 50%; 
         display: inline-block; 
-        border: 1px solid #ddd;
+        border: 2px solid #ddd;
         margin: 0 auto;
+        transition: transform 0.3s ease;
+    }
+    
+    .color-preview:hover {
+        transform: scale(1.1);
     }
     
     .image-container { 
@@ -93,7 +101,7 @@
         width: 40px; 
         height: 40px; 
         object-fit: cover;
-        border-radius: 3px;
+        border-radius: 4px;
         border: 1px solid #ced4da;
         cursor: pointer;
         transition: transform 0.3s ease;
@@ -101,6 +109,7 @@
     
     .image-preview:hover {
         transform: scale(1.1);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
     
     .more-images {
@@ -108,36 +117,41 @@
         color: white;
         font-weight: bold;
         background: #6c757d;
-        padding: 2px 6px;
-        border-radius: 8px;
+        padding: 4px 8px;
+        border-radius: 12px;
         cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    
+    .more-images:hover {
+        background: #5a6268;
     }
     
     .empty-state {
         text-align: center;
-        padding: 40px 20px;
+        padding: 60px 20px;
         color: #6c757d;
     }
     
     .empty-state i {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
+        font-size: 3rem;
+        margin-bottom: 15px;
         opacity: 0.5;
     }
     
     .stats-header {
         background: #f8f9fa;
-        padding: 15px;
-        border-radius: 4px;
-        margin-bottom: 15px;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
         border: 1px solid #dee2e6;
     }
     
     .filter-section {
         background: #f8f9fa;
-        padding: 15px;
-        border-radius: 4px;
-        margin-bottom: 15px;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
         border: 1px solid #dee2e6;
     }
 
@@ -145,17 +159,17 @@
     .project-modal {
         display: none;
         position: fixed;
-        z-index: 10000;
+        z-index: 1050;
         left: 0;
         top: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0,0,0,0.9);
+        background-color: rgba(0,0,0,0.8);
         overflow-y: auto;
     }
 
     .modal-content {
-        background-color: #fefefe;
+        background-color: #fff;
         margin: 2% auto;
         padding: 0;
         border-radius: 10px;
@@ -178,7 +192,7 @@
         font-size: 35px;
         font-weight: bold;
         cursor: pointer;
-        z-index: 10001;
+        z-index: 1051;
         background: rgba(0,0,0,0.5);
         width: 40px;
         height: 40px;
@@ -186,6 +200,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: background 0.3s ease;
     }
 
     .close-modal:hover {
@@ -193,7 +208,7 @@
     }
 
     .modal-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
         color: white;
         padding: 25px;
         border-radius: 10px 10px 0 0;
@@ -217,13 +232,16 @@
         background: #f8f9fa;
         padding: 20px;
         border-radius: 8px;
-        border-left: 4px solid #667eea;
+        border-left: 4px solid #2c3e50;
     }
 
     .detail-section h5 {
-        color: #333;
+        color: #2c3e50;
         margin-bottom: 15px;
         font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     .image-gallery-modal {
@@ -240,10 +258,12 @@
         border-radius: 8px;
         cursor: pointer;
         transition: transform 0.3s ease;
+        border: 2px solid transparent;
     }
 
     .gallery-image:hover {
         transform: scale(1.05);
+        border-color: #2c3e50;
     }
 
     .status-badge-modal {
@@ -252,11 +272,8 @@
         font-weight: 600;
         text-transform: uppercase;
         font-size: 0.8rem;
+        display: inline-block;
     }
-
-    .status-active { background-color: #d4edda; color: #155724; }
-    .status-inactive { background-color: #e2e3e5; color: #383d41; }
-    .status-progress { background-color: #fff3cd; color: #856404; }
 
     .color-display-modal {
         width: 30px;
@@ -293,13 +310,13 @@
     .attachment-card:hover {
         transform: translateY(-3px);
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        border-color: #667eea;
+        border-color: #2c3e50;
     }
 
     .attachment-icon {
         font-size: 2rem;
         margin-bottom: 10px;
-        color: #667eea;
+        color: #2c3e50;
     }
 
     .attachment-name {
@@ -318,7 +335,7 @@
     .file-preview-modal {
         display: none;
         position: fixed;
-        z-index: 10002;
+        z-index: 1060;
         left: 0;
         top: 0;
         width: 100%;
@@ -339,7 +356,7 @@
 
     .file-preview-header {
         display: flex;
-        justify-content: between;
+        justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
         padding-bottom: 15px;
@@ -375,12 +392,35 @@
         align-items: center;
         gap: 5px;
         margin-top: 10px;
+        transition: background 0.3s ease;
     }
 
     .download-btn:hover {
         background: #218838;
         color: white;
         text-decoration: none;
+    }
+
+    /* Badges personalizados */
+    .badge-category {
+        background: #6f42c1;
+        color: white;
+    }
+    
+    .badge-location {
+        background: #20c997;
+        color: white;
+    }
+
+    /* Botões de ação */
+    .btn-action {
+        padding: 6px 12px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-action:hover {
+        transform: translateY(-1px);
     }
 
     @media (max-width: 768px) {
@@ -422,6 +462,12 @@
             width: 95%;
             margin: 10% auto;
         }
+        
+        .stats-header .d-flex {
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
+        }
     }
 </style>
 
@@ -432,7 +478,10 @@
             <div class="stats-header">
                 <div class="d-flex justify-content-between align-items-center flex-wrap">
                     <div>
-                        <h3 class="mb-1">Gestão de Projectos</h3>
+                        <h3 class="mb-1">
+                            <i class="fas fa-list-alt mr-2"></i>
+                            Gestão de Projectos
+                        </h3>
                         <p class="mb-0 text-muted">
                             @if($projectoos->count() > 0)
                                 Mostrando {{ $projectoos->firstItem() }} - {{ $projectoos->lastItem() }} de {{ $projectoos->total() }} registos
@@ -442,9 +491,18 @@
                         </p>
                     </div>
                     <div class="d-flex gap-2 flex-wrap">
-                        <span class="badge badge-success">Concluídos: {{ $projectoos->where('estado', 'CONCLUIDO')->count() }}</span>
-                        <span class="badge badge-warning">Em Curso: {{ $projectoos->where('estado', '!=', 'CONCLUIDO')->count() }}</span>
-                        <span class="badge badge-info">Total: {{ $projectoos->total() }}</span>
+                        <span class="badge badge-success p-2">
+                            <i class="fas fa-check-circle mr-1"></i>
+                            Concluídos: {{ $projectoos->where('estado', 'CONCLUIDO')->count() }}
+                        </span>
+                        <span class="badge badge-warning p-2">
+                            <i class="fas fa-tasks mr-1"></i>
+                            Em Curso: {{ $projectoos->where('estado', '!=', 'CONCLUIDO')->count() }}
+                        </span>
+                        <span class="badge badge-info p-2">
+                            <i class="fas fa-folder-open mr-1"></i>
+                            Total: {{ $projectoos->total() }}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -455,12 +513,14 @@
     <div class="row">
         <div class="col-12">
             <div class="filter-section">
-                <form action="{{ route('projectoos.list') }}" method="GET" class="row g-2">
+                <form action="{{ route('projectoos.list') }}" method="GET" class="row g-3">
                     <div class="col-md-4">
+                        <label class="form-label small text-muted mb-1">Pesquisar</label>
                         <input type="text" name="search" class="form-control" placeholder="Pesquisar em todos os campos..." 
                                value="{{ request('search') }}">
                     </div>
                     <div class="col-md-3">
+                        <label class="form-label small text-muted mb-1">Estado</label>
                         <select name="estado" class="form-control">
                             <option value="">Todos os estados</option>
                             <option value="CONCLUIDO" {{ request('estado') == 'CONCLUIDO' ? 'selected' : '' }}>Concluído</option>
@@ -469,6 +529,7 @@
                         </select>
                     </div>
                     <div class="col-md-3">
+                        <label class="form-label small text-muted mb-1">Categoria</label>
                         <select name="categoria" class="form-control">
                             <option value="">Todas categorias</option>
                             @foreach($categorias as $categoria)
@@ -479,12 +540,13 @@
                         </select>
                     </div>
                     <div class="col-md-2">
+                        <label class="form-label small text-muted mb-1 invisible">Ações</label>
                         <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary flex-fill">
                                 <i class="fas fa-search"></i> Pesquisar
                             </button>
                             <a href="{{ route('projectoos.list') }}" class="btn btn-secondary">
-                                <i class="fas fa-refresh"></i> Limpar
+                                <i class="fas fa-refresh"></i>
                             </a>
                         </div>
                     </div>
@@ -498,7 +560,7 @@
         <div class="col-12">
             <div class="button-container">
                 <a href="{{ url('/home') }}" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Voltar
+                    <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
                 </a>
                 <a href="{{ route('projectoos.create') }}" class="btn btn-primary">
                     <i class="fas fa-plus"></i> Novo Projecto
@@ -508,6 +570,11 @@
                 <a href="{{ route('projectoos.export.csv') }}" class="btn btn-success">
                     <i class="fas fa-file-csv"></i> Exportar CSV
                 </a>
+                
+                <!-- Ver todos os projetos (reset filtros) -->
+                <a href="{{ route('projectoos.list') }}" class="btn btn-info">
+                    <i class="fas fa-list"></i> Ver Todos
+                </a>
             </div>
         </div>
     </div>
@@ -516,28 +583,29 @@
     <div class="row">
         <div class="col-12">
             <div class="card card-custom">
-                <div class="card-header">
+                <div class="card-header bg-white">
                     <h3 class="card-title mb-0">
                         <i class="fas fa-list-alt mr-2"></i>
                         Lista de Projectos
+                        <span class="badge badge-primary ml-2">{{ $projectoos->total() }}</span>
                     </h3>
                 </div>
                 
                 <div class="card-body p-0">
                     @if($projectoos->count() > 0)
                     <div class="table-responsive">
-                        <table class="table table-custom table-hover" id="projectsTable">
+                        <table class="table table-custom table-hover mb-0" id="projectsTable">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Nome</th>
-                                    <th>Tipografia</th>
-                                    <th>Categoria</th>
-                                    <th>Localização</th>
-                                    <th>Estado</th>
-                                    <th>Cor</th>
-                                    <th>Imagens</th>
-                                    <th>Ações</th>
+                                    <th width="60">#</th>
+                                    <th width="200">Nome</th>
+                                    <th width="120">Tipografia</th>
+                                    <th width="120">Categoria</th>
+                                    <th width="120">Localização</th>
+                                    <th width="100">Estado</th>
+                                    <th width="80">Cor</th>
+                                    <th width="120">Imagens</th>
+                                    <th width="150">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -554,18 +622,28 @@
                                     <tr>
                                         <td><strong>{{ $projectoo->id }}</strong></td>
                                         <td class="text-left">
-                                            <strong>{{ $projectoo->nome }}</strong>
-                                            @if($projectoo->descricao)
-                                            <br><small class="text-muted">{{ Str::limit($projectoo->descricao, 30) }}</small>
-                                            @endif
+                                            <div class="d-flex flex-column">
+                                                <strong class="text-dark">{{ $projectoo->nome }}</strong>
+                                                @if($projectoo->descricao)
+                                                <small class="text-muted mt-1">{{ Str::limit($projectoo->descricao, 40) }}</small>
+                                                @endif
+                                            </div>
                                         </td>
-                                        <td>{{ $projectoo->tipografia ?? 'N/A' }}</td>
                                         <td>
-                                            <span class="badge badge-secondary">
+                                            <span class="badge badge-light border">
+                                                {{ $projectoo->tipografia ?? 'N/A' }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-category">
                                                 {{ $projectoo->categoria->name ?? 'N/A' }}
                                             </span>
                                         </td>
-                                        <td>{{ $projectoo->localizacao->name ?? 'N/A' }}</td>
+                                        <td>
+                                            <span class="badge badge-location">
+                                                {{ $projectoo->localizacao->name ?? 'N/A' }}
+                                            </span>
+                                        </td>
                                         <td>
                                             <span class="status-badge {{ $statusClass }}">{{ $statusText }}</span>
                                         </td>
@@ -573,7 +651,8 @@
                                             @if($projectoo->cor)
                                                 <div class="color-preview" 
                                                      style="background-color: {{ $projectoo->cor }}"
-                                                     title="{{ $projectoo->cor }}">
+                                                     title="{{ $projectoo->cor }}"
+                                                     onclick="showColorInfo('{{ $projectoo->cor }}')">
                                                 </div>
                                             @else
                                                 <span class="text-muted">-</span>
@@ -582,36 +661,30 @@
                                         <td>
                                             @if($totalImagens > 0)
                                                 <div class="image-container">
-                                                    @if($totalImagens > 3)
-                                                        @for($i = 0; $i < 2; $i++)
-                                                            @if(isset($imagens[$i]))
-                                                            <img src="{{ asset('storage/' . $imagens[$i]) }}" 
-                                                                 class="image-preview"
-                                                                 alt="Imagem {{ $i + 1 }}"
-                                                                 onclick="openProjectModal({{ $projectoo->id }})"
-                                                                 onerror="this.style.display='none'">
-                                                            @endif
-                                                        @endfor
-                                                        <span class="more-images" onclick="openProjectModal({{ $projectoo->id }})">+{{ $totalImagens - 2 }}</span>
-                                                    @else
-                                                        @foreach($imagens as $imagem)
-                                                            <img src="{{ asset('storage/' . $imagem) }}" 
-                                                                 class="image-preview"
-                                                                 alt="Imagem"
-                                                                 onclick="openProjectModal({{ $projectoo->id }})"
-                                                                 onerror="this.style.display='none'">
-                                                        @endforeach
+                                                    @for($i = 0; $i < min(2, $totalImagens); $i++)
+                                                        @if(isset($imagens[$i]))
+                                                        <img src="{{ asset('storage/' . $imagens[$i]) }}" 
+                                                             class="image-preview"
+                                                             alt="Imagem {{ $i + 1 }}"
+                                                             onclick="openProjectModal({{ $projectoo->id }})"
+                                                             onerror="this.style.display='none'">
+                                                        @endif
+                                                    @endfor
+                                                    @if($totalImagens > 2)
+                                                        <span class="more-images" onclick="openProjectModal({{ $projectoo->id }})">
+                                                            +{{ $totalImagens - 2 }}
+                                                        </span>
                                                     @endif
                                                 </div>
                                             @else
-                                                <span class="text-muted">-</span>
+                                                <span class="text-muted small">Sem imagens</span>
                                             @endif
                                         </td>
                                         <td>
                                             <div class="btn-group">
                                                 <!-- Botão VER com modal -->
                                                 <button type="button" 
-                                                        class="btn btn-sm btn-info" 
+                                                        class="btn btn-sm btn-info btn-action" 
                                                         title="Ver detalhes"
                                                         onclick="openProjectModal({{ $projectoo->id }})">
                                                     <i class="fas fa-eye"></i>
@@ -619,13 +692,13 @@
                                                 
                                                 <!-- Botão VER página show -->
                                                 <a href="{{ route('projectoos.show', $projectoo->id) }}" 
-                                                   class="btn btn-sm btn-primary" 
+                                                   class="btn btn-sm btn-primary btn-action" 
                                                    title="Ver página completa">
                                                     <i class="fas fa-external-link-alt"></i>
                                                 </a>
 
                                                 <a href="{{ route('projectoos.edit', $projectoo->id) }}" 
-                                                   class="btn btn-sm btn-warning"
+                                                   class="btn btn-sm btn-warning btn-action"
                                                    title="Editar">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
@@ -636,8 +709,8 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" 
-                                                            class="btn btn-sm btn-danger" 
-                                                            onclick="return confirm('Tem certeza que deseja eliminar este projecto?')"
+                                                            class="btn btn-sm btn-danger btn-action" 
+                                                            onclick="return confirm('Tem certeza que deseja eliminar este projecto? Esta ação não pode ser desfeita.')"
                                                             title="Eliminar">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
@@ -653,9 +726,12 @@
                     <div class="empty-state">
                         <i class="fas fa-folder-open"></i>
                         <h4>Nenhum projecto encontrado</h4>
-                        <p>Não existem projectos que correspondam aos seus critérios de pesquisa.</p>
+                        <p class="mb-3">Não existem projectos que correspondam aos seus critérios de pesquisa.</p>
                         <a href="{{ route('projectoos.create') }}" class="btn btn-primary mt-2">
                             <i class="fas fa-plus mr-2"></i>Criar Novo Projecto
+                        </a>
+                        <a href="{{ route('projectoos.list') }}" class="btn btn-outline-secondary mt-2 ml-2">
+                            <i class="fas fa-refresh mr-2"></i>Limpar Filtros
                         </a>
                     </div>
                     @endif
@@ -663,13 +739,15 @@
                 
                 <!-- Paginação -->
                 @if($projectoos->hasPages())
-                <div class="card-footer">
+                <div class="card-footer bg-white">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div class="pagination-info">
+                        <div class="pagination-info text-muted small">
+                            <i class="fas fa-info-circle mr-1"></i>
                             Página {{ $projectoos->currentPage() }} de {{ $projectoos->lastPage() }}
+                            • {{ $projectoos->total() }} registos no total
                         </div>
                         <div>
-                            {{ $projectoos->links() }}
+                            {{ $projectoos->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
                 </div>
@@ -699,7 +777,7 @@
 <div id="filePreviewModal" class="file-preview-modal">
     <div class="file-preview-content">
         <div class="file-preview-header">
-            <h4 id="fileNamePreview"></h4>
+            <h4 id="fileNamePreview" class="mb-0"></h4>
             <span class="close-modal" onclick="closeFilePreview()">&times;</span>
         </div>
         <div class="file-preview-body" id="filePreviewBody">
@@ -752,9 +830,18 @@
         return iconMap[ext] || '📎';
     }
 
+    function showColorInfo(color) {
+        if (color) {
+            alert(`Cor do projeto: ${color}`);
+        }
+    }
+
     function openProjectModal(projectId) {
         const project = projectsData.find(p => p.id === projectId);
-        if (!project) return;
+        if (!project) {
+            alert('Projeto não encontrado!');
+            return;
+        }
 
         // Atualizar header do modal
         document.getElementById('modalProjectName').textContent = project.nome;
@@ -777,19 +864,19 @@
         const modalContent = `
             <div class="project-detail-grid">
                 <div class="detail-section">
-                    <h5><i class="fas fa-info-circle mr-2"></i>Informações Básicas</h5>
+                    <h5><i class="fas fa-info-circle"></i>Informações Básicas</h5>
                     <p><strong>Nome:</strong> ${project.nome}</p>
                     <p><strong>Tipografia:</strong> ${project.tipografia || 'N/A'}</p>
                     ${project.descricao ? `<p><strong>Descrição:</strong> ${project.descricao}</p>` : ''}
                 </div>
 
                 <div class="detail-section">
-                    <h5><i class="fas fa-tags mr-2"></i>Categoria e Localização</h5>
+                    <h5><i class="fas fa-tags"></i>Categoria e Localização</h5>
                     <p><strong>Categoria:</strong> 
-                        <span class="badge badge-primary">${project.categoria}</span>
+                        <span class="badge badge-category">${project.categoria}</span>
                     </p>
                     <p><strong>Localização:</strong> 
-                        <span class="badge badge-secondary">${project.localizacao}</span>
+                        <span class="badge badge-location">${project.localizacao}</span>
                     </p>
                     <p><strong>Estado:</strong> 
                         <span class="status-badge-modal ${statusClass}">${statusText}</span>
@@ -799,7 +886,7 @@
 
             <div class="project-detail-grid">
                 <div class="detail-section">
-                    <h5><i class="fas fa-palette mr-2"></i>Detalhes do Projecto</h5>
+                    <h5><i class="fas fa-palette"></i>Detalhes do Projecto</h5>
                     ${project.cor ? `
                         <p><strong>Cor:</strong> 
                             <div class="color-display-modal" style="background-color: ${project.cor}"></div>
@@ -811,7 +898,7 @@
                 </div>
 
                 <div class="detail-section">
-                    <h5><i class="fas fa-chart-bar mr-2"></i>Estatísticas</h5>
+                    <h5><i class="fas fa-chart-bar"></i>Estatísticas</h5>
                     <p><strong>Total de Imagens:</strong> ${project.imagens.length}</p>
                     <p><strong>Total de Anexos:</strong> ${project.anexos ? project.anexos.length : 0}</p>
                     <p><strong>Estado do Projecto:</strong> ${project.estado}</p>
@@ -820,7 +907,7 @@
 
             <div class="detail-section">
                 <h5>
-                    <i class="fas fa-camera mr-2"></i>
+                    <i class="fas fa-camera"></i>
                     Galeria de Imagens 
                     <span class="badge badge-primary ml-2">${project.imagens.length} imagens</span>
                 </h5>
@@ -847,7 +934,7 @@
             <div class="attachments-section">
                 <div class="detail-section">
                     <h5>
-                        <i class="fas fa-paperclip mr-2"></i>
+                        <i class="fas fa-paperclip"></i>
                         Documentos e Anexos
                         <span class="badge badge-info ml-2">${project.anexos.length} arquivos</span>
                     </h5>
@@ -876,7 +963,7 @@
             ` : `
             <div class="attachments-section">
                 <div class="detail-section">
-                    <h5><i class="fas fa-paperclip mr-2"></i>Documentos e Anexos</h5>
+                    <h5><i class="fas fa-paperclip"></i>Documentos e Anexos</h5>
                     <div class="text-center py-3">
                         <i class="fas fa-file-alt fa-2x text-muted mb-2"></i>
                         <p class="text-muted mb-0">Nenhum documento anexado a este projecto.</p>
@@ -886,8 +973,11 @@
             `}
 
             <div class="text-center mt-4">
-                <a href="/projectoos/${project.id}" class="btn btn-primary">
+                <a href="/projectoos/${project.id}" class="btn btn-primary mr-2">
                     <i class="fas fa-external-link-alt mr-2"></i>Ver Página Completa
+                </a>
+                <a href="/projectoos/${project.id}/edit" class="btn btn-warning">
+                    <i class="fas fa-edit mr-2"></i>Editar Projecto
                 </a>
             </div>
         `;
@@ -923,7 +1013,7 @@
             `;
         } else if (['pdf'].includes(fileExt)) {
             previewBody.innerHTML = `
-                <iframe src="${fileUrl}" width="100%" height="500px"></iframe>
+                <iframe src="${fileUrl}#view=FitH" width="100%" height="500px"></iframe>
                 <br>
                 <a href="${fileUrl}" class="download-btn" download="${fileName}">
                     <i class="fas fa-download"></i> Download do PDF
@@ -981,18 +1071,24 @@
         }
     });
 
-    // Debug no console
+    // Inicialização
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('=== DADOS DOS PROJECTOS ===');
-        @foreach($projectoos as $projectoo)
-            console.log('Projeto {{ $projectoo->id }}:', {
-                nome: '{{ $projectoo->nome }}',
-                estado: '{{ $projectoo->estado }}',
-                categoria: '{{ $projectoo->categoria->name ?? 'N/A' }}',
-                localizacao: '{{ $projectoo->localizacao->name ?? 'N/A' }}',
-                imagens: {{ count($projectoo->imagens ?? []) }}
-            });
-        @endforeach
+        console.log('=== LISTA DE PROJECTOS CARREGADA ===');
+        console.log('Total de projetos:', {{ $projectoos->total() }});
+        console.log('Projetos na página atual:', {{ $projectoos->count() }});
+        
+        // Adicionar animação suave às linhas da tabela
+        const tableRows = document.querySelectorAll('#projectsTable tbody tr');
+        tableRows.forEach((row, index) => {
+            row.style.opacity = '0';
+            row.style.transform = 'translateX(-20px)';
+            
+            setTimeout(() => {
+                row.style.transition = 'all 0.5s ease';
+                row.style.opacity = '1';
+                row.style.transform = 'translateX(0)';
+            }, index * 100);
+        });
     });
 </script>
 
