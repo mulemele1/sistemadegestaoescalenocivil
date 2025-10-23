@@ -5,9 +5,6 @@
             <i class="fas fa-building mr-2"></i>Escaleno
         </a>
         <div class="nav-links">
-    <a href="{{ url('/home') }}" class="nav-link">
-        <i class="fas fa-home mr-1"></i> Home
-    </a>
     <a href="{{ route('verprojectos') }}" class="nav-link">
         <i class="fas fa-list mr-1"></i> Projectos
     </a>

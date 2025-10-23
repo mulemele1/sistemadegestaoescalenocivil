@@ -392,7 +392,7 @@
 @include('layouts.header')
 
 <div class="full-screen-container">
-    <!-- Hero Section -->
+    <!-- Hero Section 
     <section class="hero-section">
         <div class="container">
             <h1 class="hero-title">Todos os Projectos</h1>
@@ -401,6 +401,7 @@
             </p>
         </div>
     </section>
+    -->
 
     <!-- Filtros e Pesquisa -->
     <section class="filters-section">

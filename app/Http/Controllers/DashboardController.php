@@ -34,9 +34,10 @@ class DashboardController extends Controller
         $dispensas = Dispensa::all();
         $propostas = Proposta::all();
         
-        // CORREÇÃO: Mudar $projectos para $projectoos
-        $projectoos = Projectoo::with(['categoria', 'localizacao'])->paginate(10);
-        
+        $projectoos = Projectoo::with(['categoria', 'localizacao'])
+        ->orderBy('created_at', 'desc')
+        ->paginate(5);
+
         $participantes = Participante::all();
         $administracaos = Administracao::all();
         $distribuicaos = Distribuicao::all();

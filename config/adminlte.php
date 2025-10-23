@@ -284,63 +284,7 @@ return [
                 
             ]
         ],
-        /*[
-            'text' => 'OPERAÇÕES',
-            'icon' => 'fas fa-fw fa-code',
-            'can'  => 'is_user',
-            'submenu' => [
-                [
-                    'text' => 'Proposta',
-                    'icon' => 'fas fa-fw fa-file', // Alterado para ícone de documento
-                    'url'  => 'propostas/list',
-                    'can'  => 'is_admin',
-                ],
-                
-                [
-                    'text' => 'Desembolso do INS',
-                    'icon' => 'fas fa-fw fa-credit-card',// Ícone alterado para representar transação
-                    'url'  => 'desembolsoinsfontes/lis',
-                    'can'  => 'is_admin',
-                ], 
-                [
-                    'text' => 'Desembolso à DAF',
-                    'icon' => 'fas fa-fw fa-credit-card', // Ícone alterado para representar transação
-                    'url'  => 'desembolsodafs/list',
-                    'can'  => 'is_admin',
-                ],
-                [
-                    'text' => 'Desembolso à CISPOC',
-                    'icon' => 'fas fa-fw fa-credit-card', // Ícone alterado para representar transação
-                    'url'  => 'desembolsos/list',
-                    'can'  => 'is_admin',
-                ], 
-                [
-                    'text' => 'Distribuição',
-                    'icon' => 'fas fa-fw fa-money-bill',
-                    'url'  => 'distribuicaos/list',
-                    'can'  => 'is_admin',
-                ], 
-                [
-                    'text' => 'Requisição Recepção',
-                    'icon' => 'fas fa-fw fa-file', // Alterado para ícone de documento
-                    'url'  => 'requisicaos/list',
-                    'can'  => 'is_user',
-                ], 
-                [
-                    'text' => 'Requisição CISPOC',
-                    'icon' => 'fas fa-fw fa-file', // Alterado para ícone de documento
-                    'url'  => 'requisicaocispos/list',
-                    'can'  => 'is_admin',
-                ], 
-                
-                [
-                    'text' => 'Despesas',
-                    'icon' => 'fas fa-fw fa-money-bill',
-                    'url'  => 'dispensas/list',
-                    'can'  => 'is_user',
-                ],
-            ]
-        ],*/
+        
         /*[
             'text' => 'RELATORIOS',
             'icon' => 'fas fa-fw fa-chart-pie',
@@ -441,7 +385,93 @@ return [
         'can'  => 'is_admin',
         ],
         [
-            'text' => 'SOBRE NÓS',
+            'text' => 'PESSOAS',
+            'icon' => 'fas fa-fw fa-code',
+            'can'  => 'is_user',
+            'submenu' => [
+                [
+                    'text' => 'Clientes',
+                    'icon' => 'fas fa-fw fa-file', // Alterado para ícone de documento
+                    'url'  => 'propostas/list',
+                    'can'  => 'is_admin',
+                ],
+                
+                [
+                    'text' => 'Profissionais',
+                    'icon' => 'fas fa-fw fa-credit-card',// Ícone alterado para representar transação
+                    'url'  => 'desembolsoinsfontes/lis',
+                    'can'  => 'is_admin',
+                ], 
+                [
+                    'text' => 'Funcionarios',
+                    'icon' => 'fas fa-fw fa-credit-card', // Ícone alterado para representar transação
+                    'url'  => 'desembolsodafs/list',
+                    'can'  => 'is_admin',
+                ],
+                [
+                    'text' => 'Fornecedores',
+                    'icon' => 'fas fa-fw fa-credit-card', // Ícone alterado para representar transação
+                    'url'  => 'desembolsos/list',
+                    'can'  => 'is_admin',
+                ], 
+                [
+                    'text' => 'Transportadores',
+                    'icon' => 'fas fa-fw fa-money-bill',
+                    'url'  => 'distribuicaos/list',
+                    'can'  => 'is_admin',
+                ], 
+                
+            ]
+        ],
+
+        [
+            'text' => 'ACTIVIDADES',
+            'icon' => 'fas fa-fw fa-code',
+            'can'  => 'is_user',
+            'submenu' => [
+                [
+                    'text' => 'Serviços',
+                    'icon' => 'fas fa-fw fa-file', // Alterado para ícone de documento
+                    'url'  => 'propostas/list',
+                    'can'  => 'is_admin',
+                ],
+                
+                [
+                    'text' => 'Etapas da Obra',
+                    'icon' => 'fas fa-fw fa-credit-card',// Ícone alterado para representar transação
+                    'url'  => 'desembolsoinsfontes/lis',
+                    'can'  => 'is_admin',
+                ], 
+                [
+                    'text' => 'Tipos de Custos',
+                    'icon' => 'fas fa-fw fa-credit-card', // Ícone alterado para representar transação
+                    'url'  => 'desembolsodafs/list',
+                    'can'  => 'is_admin',
+                ],
+                [
+                    'text' => 'Unidades de Medida',
+                    'icon' => 'fas fa-fw fa-credit-card', // Ícone alterado para representar transação
+                    'url'  => 'desembolsos/list',
+                    'can'  => 'is_admin',
+                ], 
+                [
+                    'text' => 'Forma de Pgto',
+                    'icon' => 'fas fa-fw fa-money-bill',
+                    'url'  => 'distribuicaos/list',
+                    'can'  => 'is_admin',
+                ], 
+                [
+                    'text' => 'Especialidades',
+                    'icon' => 'fas fa-fw fa-money-bill',
+                    'url'  => 'distribuicaos/list',
+                    'can'  => 'is_admin',
+                ], 
+                
+            ]
+        ],
+
+        [
+            'text' => 'NOVA OBRA',
             'url'  => 'projectoos/sobre',
             'icon' => 'fas fa-fw fa-user',
             'can'  => 'is_admin',

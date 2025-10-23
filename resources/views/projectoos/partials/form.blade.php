@@ -489,7 +489,7 @@
                                                 id="estado" 
                                                 required>
                                             <option value="ACTIVO" {{ old('estado', $projectoo->estado ?? '') == 'ACTIVO' ? 'selected' : '' }}>🟢 Activo</option>
-                                            <option value="EM_ANDAMENTO" {{ old('estado', $projectoo->estado ?? '') == 'EM_ANDAMENTO' ? 'selected' : '' }}>🟡 Em Andamento</option>
+                                            <option value="EM_CURSO" {{ old('estado', $projectoo->estado ?? '') == 'EM_CURSO' ? 'selected' : '' }}>🟡 Em Andamento</option>
                                             <option value="CONCLUIDO" {{ old('estado', $projectoo->estado ?? '') == 'CONCLUIDO' ? 'selected' : '' }}>🟣 Concluído</option>
                                         </select>
                                         <div class="help-text">Estado actual de execução do projecto</div>
@@ -778,12 +778,7 @@
                 input.addEventListener('input', () => this.formChanged = true);
             });
             
-            window.addEventListener('beforeunload', (e) => {
-                if (this.formChanged) {
-                    e.preventDefault();
-                    e.returnValue = 'Tem alterações não guardadas. Tem a certeza que deseja sair?';
-                }
-            });
+            
         }
         
         showLoading(show = true) {

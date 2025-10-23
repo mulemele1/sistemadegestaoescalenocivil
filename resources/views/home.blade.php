@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'SysEscaleno - Dashboard')
+@section('title', 'Escaleno - Dashboard')
 
 @section('content')
 
@@ -672,32 +672,49 @@
         line-height: 1.6;
     }
 
-    /* Stats Grid */
+    /* Stats Grid - MAIS COMPACTO E DISCRETO */
     .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        padding: 30px 20px;
-        max-width: 1200px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        padding: 15px 20px;
+        max-width: 1400px;
         margin: 0 auto;
     }
     .stat-card {
-        background: white;
-        padding: 25px;
-        border-radius: 16px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        background: rgba(255, 255, 255, 0.8);
+        padding: 12px 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         text-align: center;
-        border-left: 5px solid #2c3e50;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
+        min-width: 100px;
+        flex-shrink: 0;
+        border: 1px solid rgba(0,0,0,0.05);
     }
-    .stat-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,0.15); }
-    .stat-number { font-size: 2.5rem; font-weight: 800; color: #2c3e50; margin-bottom: 8px; }
-    .stat-label { color: #666; font-size: 1rem; font-weight: 500; }
+    .stat-card:hover { 
+        transform: translateY(-2px); 
+        box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+        background: white;
+    }
+    .stat-number { 
+        font-size: 1.2rem; 
+        font-weight: 700; 
+        color: #2c3e50; 
+        margin-bottom: 3px;
+        line-height: 1;
+    }
+    .stat-label { 
+        color: #6c757d; 
+        font-size: 0.75rem; 
+        font-weight: 500;
+        line-height: 1.2;
+    }
 
     /* Projects Grid */
     .recent-projects-title {
         text-align: center;
-        margin: 40px 0 25px;
+        margin: 30px 0 25px;
         color: #333;
         font-size: clamp(1.5rem, 4vw, 2.5rem);
         font-weight: 700;
@@ -816,29 +833,54 @@
     /* Responsive */
     @media (max-width: 768px) {
         .project-grid { grid-template-columns: 1fr; gap: 20px; padding: 0 15px 30px; }
-        .stats-grid { grid-template-columns: 1fr; padding: 20px 15px; }
+        .stats-grid { 
+            justify-content: center; 
+            flex-wrap: wrap;
+            padding: 10px 15px;
+            gap: 8px;
+        }
+        .stat-card {
+            min-width: 90px;
+            padding: 10px 12px;
+        }
+        .stat-number { font-size: 1.1rem; }
+        .stat-label { font-size: 0.7rem; }
         .hero-section { padding: 60px 15px 40px; }
+    }
+
+    @media (max-width: 480px) {
+        .stats-grid {
+            justify-content: space-between;
+        }
+        .stat-card {
+            flex: 1;
+            min-width: auto;
+            margin: 0 2px;
+            padding: 8px 10px;
+        }
+        .stat-number { font-size: 1rem; }
+        .stat-label { font-size: 0.65rem; }
     }
 </style>
 
 @include('layouts.header')
 <div class="full-screen-container">
-    <!-- Estatísticas -->
+    <!-- Estatísticas - MAIS COMPACTO E DISCRETO -->
     <div class="stats-grid">
         <div class="stat-card">
             @php $concluidos = App\Models\Projectoo::where('estado', 'CONCLUIDO')->count(); @endphp
             <div class="stat-number">{{ $concluidos }}</div>
-            <div class="stat-label">Projectos Concluídos</div>
+            <div class="stat-label">Concluídos</div>
         </div>
         <div class="stat-card">
             @php $emCurso = App\Models\Projectoo::whereIn('estado', ['EM_CURSO', 'ACTIVO'])->count(); @endphp
             <div class="stat-number">{{ $emCurso }}</div>
-            <div class="stat-label">Projectos em Curso</div>
+            <div class="stat-label">Em Curso</div>
         </div>
         <div class="stat-card">
             @php $totalProjectos = App\Models\Projectoo::count(); @endphp
             <div class="stat-number">{{ $totalProjectos }}</div>
-            <div class="stat-label">Total de Projectos</div>
+            <div class="stat-label">Total</div>
         </div>
     </div>
 
@@ -936,6 +978,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 @include('layouts.footer')
 @endcannot
+
 
 
 
@@ -1094,7 +1137,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <table class="table table-admin mb-0">
                         <thead>
                             <tr>
-                                <th><i class="fas fa-hashtag me-2"></i>ID</th>
+                                
                                 <th><i class="fas fa-project-diagram me-2"></i>Projecto</th>
                                 <th><i class="fas fa-tag me-2"></i>Categoria</th>
                                 <th><i class="fas fa-map-marker-alt me-2"></i>Localização</th>
@@ -1106,7 +1149,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         <tbody>
                             @forelse($projectoos->take(10) as $projecto)
                                 <tr>
-                                    <td class="fw-bold text-primary">{{ $projecto->id }}</td>
                                     <td>
                                         <div class="fw-bold">{{ Str::limit($projecto->nome, 30) }}</div>
                                         @if($projecto->descricao)
@@ -1309,7 +1351,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Gráfico de Categorias
+        // Gráfico de Categorias - MELHORADO
         const categoryCanvas = document.getElementById('categoryChart');
         if (categoryCanvas) {
             const categoryCtx = categoryCanvas.getContext('2d');
@@ -1319,14 +1361,19 @@ document.addEventListener('DOMContentLoaded', function() {
             ])->sortByDesc('count')->values()->toArray());
 
             if (categoryData.length > 0) {
-                const colors = ['#2c3e50', '#34495e', '#16a085', '#27ae60', '#2980b9', '#8e44ad', '#f39c12', '#e67e22', '#c0392b', '#7f8c8d'];
+                // Paleta de cores vibrantes e distintas
+                const colors = [
+                    '#2c3e50', '#e74c3c', '#3498db', '#2ecc71', '#f39c12',
+                    '#9b59b6', '#1abc9c', '#d35400', '#34495e', '#27ae60',
+                    '#2980b9', '#8e44ad', '#f1c40f', '#e67e22', '#16a085'
+                ];
                 
                 charts.category = new Chart(categoryCtx, {
                     type: 'bar',
                     data: {
                         labels: categoryData.map(item => item.name),
                         datasets: [{
-                            label: 'Projectos',
+                            label: 'Número de Projectos',
                             data: categoryData.map(item => item.count),
                             backgroundColor: categoryData.map((_, i) => colors[i % colors.length]),
                             borderColor: categoryData.map((_, i) => colors[i % colors.length]),
@@ -1339,31 +1386,129 @@ document.addEventListener('DOMContentLoaded', function() {
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: { display: false },
+                            legend: { 
+                                display: false 
+                            },
                             tooltip: {
                                 backgroundColor: 'rgba(44, 62, 80, 0.95)',
                                 titleColor: '#fff',
                                 bodyColor: '#fff',
-                                cornerRadius: 12
+                                cornerRadius: 12,
+                                callbacks: {
+                                    label: function(context) {
+                                        return `Projectos: ${context.parsed.y}`;
+                                    }
+                                }
+                            },
+                            // Plugin para mostrar números no topo das barras
+                            datalabels: {
+                                anchor: 'end',
+                                align: 'top',
+                                color: '#2c3e50',
+                                font: {
+                                    weight: 'bold',
+                                    size: 12
+                                },
+                                formatter: function(value) {
+                                    return value;
+                                }
                             }
                         },
                         scales: {
                             y: {
                                 beginAtZero: true,
-                                grid: { color: 'rgba(0,0,0,0.05)' },
-                                ticks: { stepSize: 1, precision: 0 }
+                                grid: { 
+                                    color: 'rgba(0,0,0,0.05)',
+                                    drawBorder: false
+                                },
+                                ticks: { 
+                                    stepSize: 1, 
+                                    precision: 0,
+                                    color: '#6c757d',
+                                    font: {
+                                        size: 11
+                                    }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Número de Projectos',
+                                    color: '#6c757d',
+                                    font: {
+                                        size: 12,
+                                        weight: '600'
+                                    }
+                                }
                             },
                             x: {
-                                grid: { display: false },
-                                border: { display: false }
+                                grid: { 
+                                    display: false 
+                                },
+                                border: { 
+                                    display: false 
+                                },
+                                ticks: {
+                                    color: '#6c757d',
+                                    font: {
+                                        size: 11
+                                    },
+                                    maxRotation: 45,
+                                    minRotation: 45
+                                }
                             }
                         },
                         animation: {
                             duration: 1500,
                             easing: 'easeOutQuart'
+                        },
+                        // Configurações para mostrar valores nas barras
+                        interaction: {
+                            intersect: false,
+                            mode: 'index',
+                        },
+                        elements: {
+                            bar: {
+                                borderWidth: 2,
+                            }
+                        },
+                        layout: {
+                            padding: {
+                                top: 20 // Espaço para os números no topo
+                            }
                         }
-                    }
+                    },
+                    plugins: [{
+                        id: 'barLabels',
+                        afterDraw: (chart) => {
+                            const ctx = chart.ctx;
+                            ctx.save();
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'bottom';
+                            ctx.font = 'bold 12px Arial';
+                            ctx.fillStyle = '#2c3e50';
+                            
+                            chart.data.datasets.forEach((dataset, i) => {
+                                const meta = chart.getDatasetMeta(i);
+                                meta.data.forEach((bar, index) => {
+                                    const data = dataset.data[index];
+                                    if (data > 0) { // Só mostra se o valor for maior que 0
+                                        ctx.fillText(
+                                            data, 
+                                            bar.x, 
+                                            bar.y - 5
+                                        );
+                                    }
+                                });
+                            });
+                            ctx.restore();
+                        }
+                    }]
                 });
+            } else {
+                // Caso não haja dados, mostra uma mensagem
+                categoryCtx.font = '16px Arial';
+                categoryCtx.fillStyle = '#6c757d';
+                categoryCtx.textAlign = 'center';
+                categoryCtx.fillText('Não há dados disponíveis', categoryCanvas.width / 2, categoryCanvas.height / 2);
             }
         }
         @endcan
@@ -1445,8 +1590,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.exportChart = exportChart;
 
-    console.log('🚀 Dashboard SysEscaleno inicializado com sucesso!');
+    console.log('🚀 Dashboard Escaleno inicializado com sucesso!');
 })();
 </script>
-
 @endsection
