@@ -88,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/{id}', [ProjectooController::class, 'delete'])->name('projectoos.delete');
         Route::get('/export/csv', [ProjectooController::class, 'exportCSV'])->name('projectoos.export.csv');
     });
+    
 
     // CRUD Routes - Fontes
     Route::prefix('fontes')->group(function () {

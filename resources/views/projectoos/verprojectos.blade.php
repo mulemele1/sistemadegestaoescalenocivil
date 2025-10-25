@@ -392,18 +392,7 @@
 @include('layouts.header')
 
 <div class="full-screen-container">
-    <!-- Hero Section 
-    <section class="hero-section">
-        <div class="container">
-            <h1 class="hero-title">Todos os Projectos</h1>
-            <p class="hero-subtitle">
-                Explore a nossa galeria completa de projectos de construção civil e arquitetura
-            </p>
-        </div>
-    </section>
-    -->
-
-    <!-- Filtros e Pesquisa -->
+        <!-- Filtros e Pesquisa -->
     <section class="filters-section">
         <div class="filters-container">
             <div class="search-box">

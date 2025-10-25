@@ -44,6 +44,11 @@ class ProjectooController extends Controller
         return view('projectoos.list', compact('projectoos', 'categorias'));
     }
 
+
+
+
+    
+
     public function show($id) {
     if (!$projectoo = Projectoo::with(['categoria', 'localizacao'])->find($id))
         return redirect()->route('projectoos.list')->with('error', 'Projeto não encontrado.');
